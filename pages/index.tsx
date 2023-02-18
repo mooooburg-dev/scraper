@@ -13,11 +13,13 @@ const baseURL: string = 'https://www.coupang.com';
 
 export default function Scrap({ searchKeyword, products }: Props) {
   return (
-    <div>
+    <div className="container px-32">
       <Head>
         <title>쿠팡 크롤링</title>
       </Head>
-      <h1 className="mb-4">{searchKeyword}</h1>
+      <div className="pt-14">
+        <h1 className="mb-4 font-extrabold">{searchKeyword}</h1>
+      </div>
       {products &&
         products.map((product, index) => (
           <div key={index} className="mb-4 flex">
@@ -29,7 +31,7 @@ export default function Scrap({ searchKeyword, products }: Props) {
                 height={260}
                 priority
               />
-              <div className="m-4 text-xl">{product.title}</div>
+              <div className="m-4">{product.title}</div>
             </Link>
           </div>
         ))}
