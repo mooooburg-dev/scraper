@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const response = await axios.get(
     // `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
-    `https://www.cgv.co.kr/`,
+    `https://www.naver.com/`,
     {
       headers: {
         'Content-Type': 'application/json',
