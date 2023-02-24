@@ -7,12 +7,13 @@ import { useRouter } from 'next/router';
 
 type Props = {
   searchKeyword: string;
+  data: any;
 };
 
 const baseURL: string = 'https://www.coupang.com';
 
-function ProductsPage({ searchKeyword }: Props) {
-  return <div className="container px-32">{searchKeyword}</div>;
+function ProductsPage({ searchKeyword, data }: Props) {
+  return <div className="container px-32">{data}</div>;
 }
 
 const axios = require('axios');
@@ -36,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   return {
     props: {
       searchKeyword: searchId,
+      data: response.data,
     },
   };
 };
