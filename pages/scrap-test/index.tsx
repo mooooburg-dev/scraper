@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useUserAgent } from 'next-useragent';
 
 type Props = {
   searchKeyword: string;
@@ -21,6 +22,8 @@ const axios = require('axios');
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const { query } = context;
 
+  console.log(context.req.headers['user-agent']);
+
   const searchId: string = query.q;
 
   const response = await axios.get(
@@ -30,6 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       headers: {
         'Content-Type': 'application/json',
         'Accept-Language': 'ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3',
+        'User-Agent': context.req.headers['user-agent'],
       },
     }
   );
