@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const response = await axios.get(
     // `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
-    `https://www.amazon.com/s?i=fashion-womens-intl-ship&bbn=16225018011&rh=n%3A16225018011%2Cn%3A1040660%2Cn%3A1045024&pd_rd_r=d62aaf83-f01d-40be-82b8-8df79e9d0e26&pd_rd_w=yN5zz&pd_rd_wg=hlhRA&pf_rd_p=6a92dcea-e071-4bb9-866a-369bc067390d&pf_rd_r=RQZ6H33XKHBDWZ62MTK7&qid=1646786470&rnid=1040660&ref=pd_gw_unk`,
+    `https://www.coupang.com/np/search?rocketAll=false&searchId=3bc519c953cc4421b402bafab0788257&q=%EB%8B%AD%EA%B0%80%EC%8A%B4%EC%82%B4&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=user&backgroundColor=&searchProductCount=309109&component=&rating=0&sorter=scoreDesc&listSize=36`,
     {
       headers: {
         'Content-Type': 'application/json',
