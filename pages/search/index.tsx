@@ -52,12 +52,10 @@ const cheerio = require('cheerio');
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const { query } = context;
 
-  console.log(query);
-
   const searchId: string = query.q;
 
   const response = await axios.get(
-    `https://www.coupang.com/np/search?rocketAll=false&searchId=35db8b2955a942899600ac4d61e6961c&q=%EC%97%AC%EC%84%B1+%EB%B4%84%ED%8B%B0%EC%85%94%EC%B8%A0+%EA%B8%B4%ED%8C%94&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
+    `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
     {
       headers: {
         'Content-Type': 'application/json',
