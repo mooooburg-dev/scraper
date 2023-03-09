@@ -23,6 +23,8 @@
     "next": "13.1.6",
     "next-useragent": "^2.8.0",
     "puppeteer": "^19.7.2",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "ramda": "^0.28.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
