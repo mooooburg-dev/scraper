@@ -71,6 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   let ulList: any[] = [];
   const bodyList: any[] = $('#productList>li');
+  console.log(bodyList);
   bodyList.map((i, el) => {
     ulList[i] = {
       no: i,
