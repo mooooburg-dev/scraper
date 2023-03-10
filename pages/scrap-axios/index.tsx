@@ -9,11 +9,12 @@ import { useUserAgent } from 'next-useragent';
 type Props = {
   searchKeyword: string;
   data: any;
+  content: string;
 };
 
 const baseURL: string = 'https://www.coupang.com';
 
-function ScrapAxios({ searchKeyword, data }: Props) {
+function ScrapAxios({ searchKeyword, data, content }: Props) {
   return (
     <>
       {data &&
@@ -24,6 +25,10 @@ function ScrapAxios({ searchKeyword, data }: Props) {
             </div>
           );
         })}
+
+      <div>
+        <span>{content}</span>
+      </div>
     </>
   );
 }
@@ -37,7 +42,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const searchId: string = query.q;
 
   const response = await axios.get(
-    `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
+    // `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
+    `https://www.cgv.co.kr`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -48,25 +54,26 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const content = await response.data;
 
-  const $ = cheerio.load(content);
+  // const $ = cheerio.load(content);
 
-  let ulList: any[] = [];
-  const bodyList: any[] = $('#productList>li');
-  bodyList.map((i, el) => {
-    ulList[i] = {
-      no: i,
-      title: $(el).find('.descriptions .name').text(),
-      image: $(el).find('.image .search-product-wrap-img').attr('data-img-src')
-        ? $(el).find('.image .search-product-wrap-img').attr('data-img-src')
-        : $(el).find('.image .search-product-wrap-img').attr('src'),
-      link: $(el).find('.search-product-link').attr('href'),
-    };
-  });
+  // let ulList: any[] = [];
+  // const bodyList: any[] = $('#productList>li');
+  // bodyList.map((i, el) => {
+  //   ulList[i] = {
+  //     no: i,
+  //     title: $(el).find('.descriptions .name').text(),
+  //     image: $(el).find('.image .search-product-wrap-img').attr('data-img-src')
+  //       ? $(el).find('.image .search-product-wrap-img').attr('data-img-src')
+  //       : $(el).find('.image .search-product-wrap-img').attr('src'),
+  //     link: $(el).find('.search-product-link').attr('href'),
+  //   };
+  // });
 
   return {
     props: {
       searchKeyword: searchId,
-      data: ulList,
+      data: [],
+      content,
     },
   };
 };
