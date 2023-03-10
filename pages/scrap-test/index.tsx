@@ -47,44 +47,81 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   //   }
   // );
 
-  // 일반적인 사용 예시
-  puppeteer.launch({ headless: true }).then(async (browser: any) => {
-    console.log('Running tests..');
-    const page = await browser.newPage();
-    await page.goto(
-      `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`
-    );
+  const browserFetcher = puppeteer.createBrowserFetcher();
+  let revisionInfo = await browserFetcher.download('1095492');
 
-    await page.waitForTimeout(5000);
-    // await page.screenshot({ path: 'testresult.png', fullPage: true });
-
-    const content = await page.content();
-    const $ = cheerio.load(content);
-    await browser.close();
-    console.log(`All done, check the screenshot. ✨`);
-
-    let ulList: any[] = [];
-    const bodyList: any[] = $('#productList>li');
-    bodyList.map((i, el) => {
-      ulList[i] = {
-        no: i,
-        title: $(el).find('.descriptions .name').text(),
-        image: $(el)
-          .find('.image .search-product-wrap-img')
-          .attr('data-img-src')
-          ? $(el).find('.image .search-product-wrap-img').attr('data-img-src')
-          : $(el).find('.image .search-product-wrap-img').attr('src'),
-        link: $(el).find('.search-product-link').attr('href'),
-      };
+  const browser = await puppeteer
+    .launch({
+      executablePath: revisionInfo.executablePath,
+      ignoreDefaultArgs: ['--disable-extensions'],
+      headless: true,
+      args: ['--no-sandbox', '--disabled-setupid-sandbox'],
+    })
+    .then(async (browser: any) => {
+      //   console.log('Running tests..');
+      const page = await browser.newPage();
+      await page.goto(
+        `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`
+      );
+      await page.waitForTimeout(5000);
+      //   // await page.screenshot({ path: 'testresult.png', fullPage: true });
+      const content = await page.content();
+      const $ = cheerio.load(content);
+      // console.log(content);
+      await browser.close();
+      console.log(`All done, check the screenshot. ✨`);
+      let ulList: any[] = [];
+      const bodyList: any[] = $('#productList>li');
+      bodyList.map((i, el) => {
+        ulList[i] = {
+          no: i,
+          title: $(el).find('.descriptions .name').text(),
+          image: $(el)
+            .find('.image .search-product-wrap-img')
+            .attr('data-img-src')
+            ? $(el).find('.image .search-product-wrap-img').attr('data-img-src')
+            : $(el).find('.image .search-product-wrap-img').attr('src'),
+          link: $(el).find('.search-product-link').attr('href'),
+        };
+      });
+      console.log(ulList);
     });
 
-    console.log(ulList);
-  });
+  // 일반적인 사용 예시
+  // puppeteer.launch({ headless: true }).then(async (browser: any) => {
+  //   console.log('Running tests..');
+  // const page = await browser.newPage();
+  // await page.goto(
+  //   `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`
+  // );
+  // await page.waitForTimeout(5000);
+  //   // await page.screenshot({ path: 'testresult.png', fullPage: true });
+  // const content = await page.content();
+  // const $ = cheerio.load(content);
+  // console.log(content);
+  // await browser.close();
+  // console.log(`All done, check the screenshot. ✨`);
+  // let ulList: any[] = [];
+  // const bodyList: any[] = $('#productList>li');
+  // bodyList.map((i, el) => {
+  //   ulList[i] = {
+  //     no: i,
+  //     title: $(el).find('.descriptions .name').text(),
+  //     image: $(el)
+  //       .find('.image .search-product-wrap-img')
+  //       .attr('data-img-src')
+  //       ? $(el).find('.image .search-product-wrap-img').attr('data-img-src')
+  //       : $(el).find('.image .search-product-wrap-img').attr('src'),
+  //     link: $(el).find('.search-product-link').attr('href'),
+  //   };
+  // });
+  // console.log(ulList);
+  // });
 
   return {
     props: {
       searchKeyword: searchId,
-      data: [],
+      data: [123],
     },
   };
 };
