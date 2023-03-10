@@ -76,6 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const browserFetcher = puppeteer.createBrowserFetcher();
   let revisionInfo = await browserFetcher.download('1095492');
 
+  console.log(revisionInfo.executablePath);
   const browser = await puppeteer
     .launch({
       executablePath: revisionInfo.executablePath,
