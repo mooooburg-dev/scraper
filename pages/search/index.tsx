@@ -87,9 +87,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     .then(async (browser: any) => {
       //   console.log('Running tests..');
       const page = await browser.newPage();
-      await page.goto(
-        `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`
-      );
+      await page.goto(`https://www.coupang.com/np/search?q=${searchId}`);
+      // await page.goto('https://www.coupang.com/np/categories/186764');
       await page.waitForTimeout(5000);
       //   // await page.screenshot({ path: 'testresult.png', fullPage: true });
       const content = await page.content();
