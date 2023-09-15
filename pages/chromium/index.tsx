@@ -47,7 +47,6 @@ export default function ProductsPage({ searchKeyword, products }: Props) {
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
 import chromium from 'chrome-aws-lambda';
 import playwright from 'playwright-core';
