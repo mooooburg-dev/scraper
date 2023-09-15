@@ -87,13 +87,14 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     .then(async (browser: any) => {
       //   console.log('Running tests..');
       const page = await browser.newPage();
-      await page.goto(`https://www.coupang.com/np/search?q=${searchId}`);
+      // await page.goto(`https://www.coupang.com/np/search?q=${searchId}`);
+      await page.goto(`https://pages.coupang.com/p/96636`);
       // await page.goto('https://www.coupang.com/np/categories/186764');
       await page.waitForTimeout(5000);
       //   // await page.screenshot({ path: 'testresult.png', fullPage: true });
       const content = await page.content();
       const $ = cheerio.load(content);
-      // console.log(content);
+      console.log(content);
       await browser.close();
       console.log(`All done, check the screenshot. ✨`);
       const bodyList: any[] = $('#productList>li');
@@ -109,7 +110,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
           link: $(el).find('.search-product-link').attr('href'),
         };
       });
-      console.log(ulList);
+      // console.log(ulList);
     });
 
   return {
