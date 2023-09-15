@@ -55,6 +55,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     }
   );
 
+  console.log(response.data);
+
   const content = await response.data;
 
   // const $ = cheerio.load(content);
