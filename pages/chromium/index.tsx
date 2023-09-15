@@ -47,56 +47,45 @@ export default function ProductsPage({ searchKeyword, products }: Props) {
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-// puppeteer-extra 는 puppeteer의 모든 기능을 가지고 있습니다.
-// plugin과의 호환을 위해 puppeteer 대신 puppeteer-extra를 사용해주세요.
-const puppeteer = require('puppeteer-extra');
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-// 플러그인을 puppeteer의 기본값으로 넣어주세요.
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+import chromium from 'chrome-aws-lambda';
+import playwright from 'playwright-core';
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const { query } = context;
-  puppeteer.use(StealthPlugin());
-
   const searchId: string = query.q;
 
   let ulList: any[] = [];
 
-  // const response = await axios.get(
-  //   `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
-  //   {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept-Language': 'ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3',
-  //     },
-  //   }
-  // );
-
-  // 일반적인 사용 예시
-  const browserFetcher = puppeteer.createBrowserFetcher();
-  let revisionInfo = await browserFetcher.download('1095492');
-
-  console.log(revisionInfo.executablePath);
-  const browser = await puppeteer
+  const browser = await playwright.chromium
     .launch({
-      executablePath: revisionInfo.executablePath,
-      ignoreDefaultArgs: ['--disable-extensions'],
-      headless: true,
-      args: ['--no-sandbox', '--disabled-setupid-sandbox'],
+      args: [
+        ...chromium.args,
+        '--font-render-hinting=none',
+        '--no-sandbox',
+        '--disabled-setupid-sandbox',
+      ], // This way fix rendering issues with specific fonts
+      executablePath:
+        process.env.NODE_ENV === 'production'
+          ? await chromium.executablePath
+          : '/usr/local/bin/chromium',
+      headless:
+        process.env.NODE_ENV === 'production' ? chromium.headless : true,
     })
     .then(async (browser: any) => {
-      //   console.log('Running tests..');
       const page = await browser.newPage();
-      // await page.goto(`https://www.coupang.com/np/search?q=${searchId}`);
-      await page.goto(`https://pages.coupang.com/p/96636`);
-      // await page.goto('https://www.coupang.com/np/categories/186764');
+      // await page.goto(
+      //   `https://www.coupang.com/np/search?component=186664&q=%EC%9B%90%ED%94%BC%EC%8A%A4&channel=user`
+      // );
+      // await page.goto(`https://www.naver.com`);
+      await page.goto(`https://www.coupang.com/np/categories/186764`);
+      // await page.goto(`https://www.cgv.co.kr`);
       await page.waitForTimeout(5000);
-      //   // await page.screenshot({ path: 'testresult.png', fullPage: true });
       const content = await page.content();
-      const $ = cheerio.load(content);
       console.log(content);
+      const $ = cheerio.load(content);
       await browser.close();
-      console.log(`All done, check the screenshot. ✨`);
       const bodyList: any[] = $('#productList>li');
       bodyList.map((i, el) => {
         ulList[i] = {
@@ -110,7 +99,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
           link: $(el).find('.search-product-link').attr('href'),
         };
       });
-      // console.log(ulList);
     });
 
   return {
