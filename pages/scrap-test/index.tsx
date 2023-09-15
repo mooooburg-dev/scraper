@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const searchId: string = query.q;
 
   const response = await axios.get(
-    `https://www.coupang.com/np/categories/306749?channel=plp_C2`,
+    `https://pages.coupang.com/p/96636`,
     // `https://www.cgv.co.kr`,
     {
       headers: {
