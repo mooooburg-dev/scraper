@@ -20,15 +20,15 @@ function ScrapAxios({ searchKeyword, data, content }: Props) {
       {data &&
         data.map((item: any, idx: any) => {
           return (
-            <div className="container relative " key={idx}>
-              {item.title}
+            <div className="container" key={idx}>
+              {/* {item.title} */}
             </div>
           );
         })}
 
-      {/* <div>
+      <div>
         <span>{content}</span>
-      </div> */}
+      </div>
     </>
   );
 }
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const response = await axios.get(
     // `https://pages.coupang.com/p/54908`, //반품마켓
-    `https://www.coupang.com/np/search?component=186664&q=%EC%9B%90%ED%94%BC%EC%8A%A4&channel=user`, // 원피스
+    `https://www.coupang.com/np/search?component=186664&q=%EC%9B%90%ED%94%BC%EC%8A%A4&channel=user`,
     // `https://www.cgv.co.kr`,
     {
       headers: {
@@ -58,15 +58,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const content = await response.data;
 
   // const $ = cheerio.load(content);
-  // console.log($);
 
   // let ulList: any[] = [];
-  // const bodyList: any[] = $('.carousel-contents');
-
+  // const bodyList: any[] = $('#productList>li');
   // bodyList.map((i, el) => {
   //   ulList[i] = {
   //     no: i,
-  //     title: $(el).find('.product-unit-info__title').text(),
+  //     title: $(el).find('.descriptions .name').text(),
   //     image: $(el).find('.image .search-product-wrap-img').attr('data-img-src')
   //       ? $(el).find('.image .search-product-wrap-img').attr('data-img-src')
   //       : $(el).find('.image .search-product-wrap-img').attr('src'),
