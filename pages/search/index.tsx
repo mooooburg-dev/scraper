@@ -55,6 +55,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   let chrome: any;
   let isVercel: boolean = false;
 
+  console.log(
+    `process.env.AWS_LAMBDA_FUNCTION_VERSION: ${process.env.AWS_LAMBDA_FUNCTION_VERSION}`
+  );
   if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
     isVercel = true;
     chrome = require('chrome-aws-lambda');
