@@ -83,12 +83,12 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const browserFetcher = puppeteer.createBrowserFetcher();
     revisionInfo = await browserFetcher.download('1095492');
   } else {
-    revisionInfo = await puppeteer.executablePath;
+    revisionInfo = await chrome.executablePath;
   }
 
   const browser = await puppeteer
     .launch({
-      executablePath: revisionInfo.executablePath,
+      executablePath: isVercel ? revisionInfo : revisionInfo.executablePath,
       ignoreDefaultArgs: ['--disable-extensions'],
       headless: true,
       ignoreHTTPSErrors: true,
