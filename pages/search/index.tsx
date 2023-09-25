@@ -84,6 +84,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     revisionInfo = await browserFetcher.download('1095492');
   } else {
     revisionInfo = await chrome.executablePath;
+    console.log(`revisionInfo: ${revisionInfo}`);
   }
 
   const browser = await puppeteer
@@ -92,7 +93,11 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       ignoreDefaultArgs: ['--disable-extensions'],
       headless: true,
       ignoreHTTPSErrors: true,
-      args: ['--no-sandbox', '--disabled-setupid-sandbox'],
+      args: [
+        '--no-sandbox',
+        '--disabled-setupid-sandbox',
+        '--disable-web-security',
+      ],
     })
     .then(async (browser: any) => {
       const page = await browser.newPage();
@@ -102,9 +107,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       await page.waitForTimeout(5000);
       const content = await page.content();
       const $ = cheerio.load(content);
-      console.log(content);
+      // console.log(content);
       await browser.close();
-      console.log(`All done, check the screenshot. ✨`);
+      // console.log(`All done, check the screenshot. ✨`);
       const bodyList: any[] = $('#productList>li');
       bodyList.map((i, el) => {
         ulList[i] = {
