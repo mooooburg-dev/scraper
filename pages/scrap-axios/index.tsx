@@ -45,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     `https://www.coupang.com/np/search?rocketAll=false&q=${searchId}&brand=&offerCondition=&filter=&availableDeliveryFilter=&filterType=&isPriceRange=false&priceRange=&minPrice=&maxPrice=&page=1&trcid=&traid=&filterSetByUser=true&channel=auto&backgroundColor=&searchProductCount=122651&component=&rating=0&sorter=scoreDesc&listSize=36`,
     // `https://www.cgv.co.kr`,
     {
+      timeout: 5000,
       headers: {
         'Content-Type': 'application/json',
         'Accept-Language': 'ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3',
