@@ -1,0 +1,5 @@
+{
+  "env": {
+    "PUPPETEER_EXECUTABLE_PATH": "/path/to/chromium-binary"
+  }
+}
