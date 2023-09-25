@@ -59,10 +59,12 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     `process.env.AWS_LAMBDA_FUNCTION_VERSION: ${process.env.AWS_LAMBDA_FUNCTION_VERSION}`
   );
   if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+    console.log('[VERCEL mooburg]');
     isVercel = true;
     chrome = require('chrome-aws-lambda');
     puppeteer = require('puppeteer-core');
   } else {
+    console.log('[!VERCEL mooburg]');
     isVercel = false;
     puppeteer = require('puppeteer-extra');
   }
