@@ -90,7 +90,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const browser = await puppeteer
     .launch({
-      executablePath: isVercel ? 'revisionInfo' : revisionInfo.executablePath,
+      executablePath: isVercel ? revisionInfo : revisionInfo.executablePath,
       ignoreDefaultArgs: ['--disable-extensions'],
       headless: true,
       ignoreHTTPSErrors: true,
