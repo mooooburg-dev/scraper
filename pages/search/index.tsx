@@ -83,13 +83,14 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const browserFetcher = puppeteer.createBrowserFetcher();
     revisionInfo = await browserFetcher.download('1095492');
   } else {
-    revisionInfo = await chrome.executablePath;
+    // revisionInfo = await chrome.executablePath;
+    revisionInfo = '/path/to/chromium-binary';
     console.log(`revisionInfo: ${revisionInfo}`);
   }
 
   const browser = await puppeteer
     .launch({
-      executablePath: isVercel ? revisionInfo : revisionInfo.executablePath,
+      executablePath: isVercel ? 'revisionInfo' : revisionInfo.executablePath,
       ignoreDefaultArgs: ['--disable-extensions'],
       headless: true,
       ignoreHTTPSErrors: true,
