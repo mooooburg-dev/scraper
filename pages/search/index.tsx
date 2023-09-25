@@ -83,8 +83,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const browserFetcher = puppeteer.createBrowserFetcher();
     revisionInfo = await browserFetcher.download('1095492');
   } else {
-    // revisionInfo = await chrome.executablePath;
-    revisionInfo = '/path/to/chromium-binary';
+    revisionInfo = await chrome.executablePath;
+    // revisionInfo = '/path/to/chromium-binary';
     console.log(`revisionInfo: ${revisionInfo}`);
   }
 
